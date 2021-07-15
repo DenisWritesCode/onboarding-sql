@@ -55,6 +55,12 @@ app.config([
         controller: function (students, $scope) {
           $scope.students = students;
           $scope.studentSearch = "";
+
+          // Search
+          $scope.sort = function(keyname){
+            $scope.sortKey = keyname;   
+            $scope.reverse = !$scope.reverse; 
+        }
         },
       })
       // Edit the institution name

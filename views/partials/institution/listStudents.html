@@ -1,11 +1,31 @@
 <div class="listStudents">
-    <label
+  <label
     >Search:
     <input type="text" ng-model="studentSearch" />
   </label>
-    <ul ng-repeat="student in students | filter: {'student_name' : studentSearch}">
-        <li>
-            {{student.student_name}} - {{student.course_name}}
-        </li>
-    </ul>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th ng-click="sort('student_name')">
+          <span
+            class="glyphicon sort-icon"
+            ng-show="sortKey=='student_name'"
+            ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"
+          ></span
+          >Student Name
+        </th>
+        <th>Course</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        ng-repeat="student in students |orderBy: sortKey:reverse| filter: studentSearch"
+      >
+        <td>{{$index + 1}}</td>
+        <td>{{student.student_name}}</td>
+        <td>{{student.course_name}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
