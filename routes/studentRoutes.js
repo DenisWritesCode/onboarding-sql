@@ -8,6 +8,8 @@ const studentController = require("../controllers/studentController");
 
 // Retrieve all students
 router.get("/", studentController.all_students);
+// Get student details
+router.get("/:id", studentController.student_details);
 // Add student
 router.post("/", studentController.add_student);
 // Edit student name

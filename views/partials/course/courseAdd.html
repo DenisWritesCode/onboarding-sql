@@ -1,0 +1,21 @@
+<div class="addCourse">
+    <form ng-submit="addCourseFunction()">
+      <label>
+        <p>Course Name:</p>
+        <input
+          type="text"
+          required
+          ng-model="course.course_name"
+        />
+      </label>
+      <label>
+        <p>Institution:</p>
+        <input
+          ng-model="course.institution_name"
+          disabled 
+        /> <!-- Disabled because you don't need to change the institution_name. Just here for visual feedback -->
+      </label>
+      <button type="submit">Add Course</button>
+    </form>
+  </div>
+  

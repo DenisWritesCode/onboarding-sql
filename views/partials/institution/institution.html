@@ -1,0 +1,19 @@
+<div class="institution">
+  <a
+    ui-sref="addInstitution({institution: schools[0].institution_name, id: schools[0].institution_id})"
+    >Add an Institution</a
+  >
+  <label
+    >Search:
+    <input type="text" ng-model="institutionSearch" />
+  </label>
+  <ul ng-repeat="school in schools | filter: {'institution_name' : institutionSearch}">
+    <li>
+      {{school.institution_name}} -
+      <a ui-sref="institutionDetails({id: school.institution_id})">View</a>
+      <a ui-sref="institutionEditName({id: school.institution_id, institution: school.institution_name})">Edit name</a>
+      <a ui-sref="institutionListStudents({id: school.institution_id})">List all students</a>
+      <button ng-click="delete_institution(school.institution_id)">Delete</button>
+    </li>
+  </ul>
+</div>

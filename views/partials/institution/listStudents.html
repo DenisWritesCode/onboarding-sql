@@ -1,0 +1,11 @@
+<div class="listStudents">
+    <label
+    >Search:
+    <input type="text" ng-model="studentSearch" />
+  </label>
+    <ul ng-repeat="student in students | filter: {'student_name' : studentSearch}">
+        <li>
+            {{student.student_name}} - {{student.course_name}}
+        </li>
+    </ul>
+</div>

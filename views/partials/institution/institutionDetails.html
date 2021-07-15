@@ -1,0 +1,23 @@
+<div class="">
+  <a
+    ui-sref="addCourse({institution: courses[0].institution_name, id: courses[0].institution_id})"
+    >Add a course to this Institution</a
+  >
+  <label
+    >Search:
+    <input type="text" ng-model="courseToSearch" />
+  </label>
+  <ul>
+    <li
+      ng-repeat="course in courses | filter: {'course_name' : courseToSearch}"
+    >
+      {{course.course_name}} -
+      <a ui-sref="courseDetails({id: course.course_id})">View</a>
+      <a
+        ui-sref="courseEditName({course: course.course_name, id: course.institution_id, course_id: course.course_id})"
+        >Edit {{course.course_name}}'s Name</a
+      >
+      <button ng-click="deleteCourse(course.course_id)">Delete</button>
+    </li>
+  </ul>
+</div>

@@ -8,8 +8,10 @@ const courseController = require('../controllers/courseController');
 
 // Retrieve all courses
 router.get('/', courseController.all_courses);
-// Retrieve all courses for a specific course
-router.get('/:id', courseController.all_courses_specific_school);
+// Retrieve all the students enrolled in a particular course
+router.get('/:id', courseController.students_in_course);
+// Retrieve all courses for a specific institution
+router.get('/institution/:id', courseController.all_courses_specific_school);
 // Add a course
 router.post('/', courseController.add_course);
 // Update course name

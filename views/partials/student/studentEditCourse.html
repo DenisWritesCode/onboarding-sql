@@ -1,0 +1,21 @@
+<div class="student">
+  <form ng-submit="updateCourse()">
+    <label>
+      <p>Name:</p>
+      <input
+        type="text"
+        ng-model="newStudentDetails.student"
+        disabled
+      />
+    </label>
+
+    <label>
+      <p>Course:</p>
+      <input
+        type="text"
+        ng-model="newStudentDetails.subject_name"
+      />
+    </label>
+    <button type="submit">Save Changes</button>
+  </form>
+</div>
