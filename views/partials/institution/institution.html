@@ -1,0 +1,71 @@
+<div class="institution">
+  <div class="row">
+    <a
+      ui-sref="addInstitution({institution: schools[0].institution_name, id: schools[0].institution_id})"
+      class="addInstitution"
+    >
+      <button class="btn btn-outline-success"><i class="fas fa-plus-circle"></i> Institution</button>
+    </a>
+  </div>
+
+  <p ng-hide="schools.length > 0" class="no-display">
+    There are no institutions to show
+  </p>
+  <div class="tableInstitution" ng-show="schools.length > 0">
+    <h3 class="heading">List of Institutions</h3>
+    <div class="d-flex justify-content-end">
+      <label class="search"
+        >Search:
+        <input type="text" ng-model="institutionSearch" />
+      </label>
+    </div>
+
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr class="d-flex">
+              <th class="col-2">Index</th>
+              <th class="sortable col-3" ng-click="sort('institution_name')">
+                Institution Name
+                <i class="fas fa-chevron-down sort-icon" ng-show="reverse"></i>
+                <i class="fas fa-chevron-up sort-icon" ng-show="!reverse"></i>
+              </th>
+              <th class="col-6">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="d-flex"
+              ng-repeat="school in schools | orderBy: sortKey:reverse | filter: {'institution_name' : institutionSearch}"
+            >
+              <td class="col-2">{{$index +1 }}</td>
+              <td class="col-3">{{school.institution_name}}</td>
+              <td class="col-6">
+                <a ui-sref="institutionDetails({id: school.institution_id})"
+                  >View Courses |</a
+                >
+                <a
+                  ui-sref="institutionEditName({id: school.institution_id, institution: school.institution_name})"
+                  ><i class="fas fa-edit"></i> name |</a
+                >
+                <a
+                  ui-sref="institutionListStudents({id: school.institution_id})"
+                  >List all students |</a
+                >
+                <button
+                  ng-click="delete_institution(school.institution_id)"
+                  class="btn text-danger"
+                >
+                  <i class="fas fa-times-circle"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
+</div>

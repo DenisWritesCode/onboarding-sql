@@ -10,6 +10,8 @@ const instutionController = require('../controllers/institutionController');
 router.get('/', instutionController.all_institutions);
 //Retrieve a single institution
 router.get('/:id', instutionController.specific_institution);
+// Retrieve all students enrolled in an instution
+router.get('/students/:id', instutionController.all_institution_students);
 // Add an institution
 router.post('/', instutionController.add_institution);
 // Update an institution name

@@ -10,14 +10,31 @@ const all_institutions = (req, res) => {
   });
 };
 
-//Retrieve a single institution
+//Retrieve a single institution's courses
 const specific_institution = (req, res) => {
   const id = req.params.id;
 
-  const sql = "SELECT * FROM institution WHERE institution_id=?";
+  const sql = "SELECT institution.institution_name, institution.institution_id, course.course_id, course.course_name FROM course JOIN institution ON course.institution = institution.institution_id WHERE institution_id=?";
   db.query(sql, id, (err, result) => {
     if (err) throw err;
     res.send(result);
+  });
+};
+
+// Retrieve all students enrolled in an institution
+const all_institution_students = (req, res) => {
+  const id = req.params.id;
+
+  const sql = "SELECT student.student_name, course.course_name, institution.institution_name FROM student INNER JOIN course ON student.course = course.course_id INNER JOIN institution ON course.institution = institution.institution_id WHERE institution.institution_id = ?";
+
+  db.query(sql, id, (err, result) => {
+    if(err) throw err;
+    if(result.length > 0){
+      // Institution has students enrolled
+      res.send(result);
+    } else {
+      res.status(500).send("The selected institution has no students");
+    }
   });
 };
 
@@ -31,13 +48,13 @@ const add_institution = (req, res) => {
     if (err) throw err;
     if (result.length > 0) {
       // Name already exists
-      res.send("Institution name already taken");
+      res.status(500).send("Institution name already taken");
     } else {
       // Insert new institution
       const insert = "INSERT INTO `institution`(`institution_name`) VALUES (?)";
-      db.query(insert, name, (err, result) => {
-        if (err) throw err;
-        res.send(result);
+      db.query(insert, name, (error, insert_result) => {
+        if (error) throw error;
+        res.send(insert_result);
       });
     }
   });
@@ -54,13 +71,13 @@ const update_institution = (req, res) => {
     if (err) throw err;
     if (result.length > 0) {
       // Name already exists
-      res.send("Institution name already taken");
+      res.status(500).send("Institution name already taken");
     } else {
       const sql =
         "UPDATE `institution` SET `institution_name`=? WHERE institution_id=?";
-      db.query(sql, [new_name, id], (err, result) => {
-        if (err) throw err;
-        res.send(result);
+      db.query(sql, [new_name, id], (error, name_result) => {
+        if (error) throw error;
+        res.send(name_result);
       });
     }
   });
@@ -77,13 +94,13 @@ const delete_institution = (req, res) => {
     if (err) throw err;
     if (results.length > 0) {
       // That institution has courses
-      res.send("Can't delete an institution that has a course attached to it");
+      res.status(500).send("Can't delete an institution that has a course attached to it");
     } else {
       // That institution has no courses thus can be deleted.
       const sql_delete = "DELETE FROM `institution` WHERE institution_id=?";
-      db.query(sql_delete, id, (err, result) => {
-        if (err) throw err;
-        res.send(result);
+      db.query(sql_delete, id, (error, delete_result) => {
+        if (error) throw error;
+        res.send(delete_result);
       });
     }
   });
@@ -93,6 +110,7 @@ const delete_institution = (req, res) => {
 module.exports = {
   all_institutions,
   specific_institution,
+  all_institution_students,
   add_institution,
   update_institution,
   delete_institution,

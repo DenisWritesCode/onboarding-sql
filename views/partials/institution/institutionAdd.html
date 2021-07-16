@@ -1,0 +1,29 @@
+<div class="addInstitution">
+  <a ui-sref="institution">
+    <button class="btn btn-outline-success">
+      <i class="fas fa-angle-double-left"></i> Institutions
+    </button>
+  </a>
+  <form ng-submit="addInstitutionFunction()" class="border-top-0 rounded-bottom">
+    <h3>Add a new Institution</h3>
+    <div class="row mb-1">
+      <label for="name" class="col-4 col-form-label">
+        <p>Institution Name</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          ng-model="institution.institution_name"
+        />
+      </div>
+    </div>
+
+    <div class="d-grid gap-2">
+      <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Institution</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap");
+
+body {
+  background: #f1f2f6;
+  font-family: "Poppins", sans-serif;
+}
+
+.no-display {
+  margin-top: 10px;
+}
+
+.content {
+  background: #fff;
+  padding: 3%;
+  min-height: 90vh;
+}
+
+table {
+  margin: 0 auto;
+}
+
+.addInstitution {
+  margin-bottom: -20px;
+}
+.search {
+  position: relative;
+  top: -15px;
+}
+
+.sort-icon {
+  font-size: 9px;
+  margin-left: 5px;
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+.sortable:hover {
+  color: #1b7700;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+nav a {
+  color: #fff;
+}
+
+nav a:hover {
+  color: #b4b4b4;
+}
+
+table a:hover {
+  color: #1b7700;
+}
+
+.heading {
+    position: relative;
+    top:30px;
+}
+
+
+/******** Add Institution *******/
+form {
+    text-align: center;
+    max-width: 50%;
+    margin: 10px auto;
+}

@@ -1,6 +1,6 @@
 // Houses all functions assosciated with /courses
 // ------------------------------------------------
-
+const path = require("path");
 const db = require("./dbSetup");
 
 // Get all courses
@@ -23,11 +23,24 @@ const all_courses_specific_school = (req, res) => {
     if (results.length > 0) {
       res.send(results);
     } else {
-      res.send("Specified course has no students enrolled");
+      res.status(500).send("Specified course has no students enrolled");
     }
   });
 };
 
+// Get all the students enrolled in a particular course
+// Expects a course_id to be supplied
+const students_in_course = (req, res) => {
+  const course_id = req.params.id;
+
+  const sql = "SELECT student.student_id, student.student_name, course.course_name FROM student JOIN course ON student.course = course.course_id WHERE course_id=?";
+
+  db.query(sql, course_id, (err, results) => {
+    if (err) throw err;
+    res.send(results);
+  });
+
+};
 // Delete a specific course
 // Expect course_id to be passed
 const delete_course = (req, res) => {
@@ -40,7 +53,7 @@ const delete_course = (req, res) => {
     if (err) throw err;
     if (results.length > 0) {
       // course has student
-      res.send("Can't delete a course that has students enrolled");
+      res.status(500).send("Can't delete a course that has students enrolled");
     } else {
       // Course has no student and can be deleted
       const delete_sql = "DELETE FROM `course` WHERE course_id = ?";
@@ -72,7 +85,7 @@ const add_course = (req, res) => {
     if (err) throw err;
     if (results.length > 0) {
       // Such a course exists and we can't add a duplicate
-      res.send("Can't have duplicate courses in the same institution");
+      res.status(500).send("Can't have duplicate courses in the same institution");
     } else {
       // No such course exists and so we can add it
       const add_sql =
@@ -104,7 +117,7 @@ const edit_course = (req, res) => {
     if (err) throw err;
     if (results.length > 0) {
       // Such a course exists and we can't add a duplicate
-      res.send("Can't have duplicate courses in the same institution");
+      res.status(500).send("Can't have duplicate courses in the same institution");
     } else {
       const update_sql =
         "UPDATE `course` SET `course_name`=? WHERE `course_id` = ?";
@@ -119,6 +132,7 @@ const edit_course = (req, res) => {
 module.exports = {
   all_courses,
   all_courses_specific_school,
+  students_in_course,
   delete_course,
   add_course,
   edit_course,

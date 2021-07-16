@@ -1,0 +1,32 @@
+<div class="editCourseName">
+
+    <a ui-sref="institutionDetails({id: institution_id})">
+        <button class="btn btn-outline-success">
+          <i class="fas fa-angle-double-left"></i> Courses
+        </button>
+      </a>
+
+    <form ng-submit="updateCourseName()">
+        <h3 style="text-align: left;">Edit the Course Name</h3>
+
+        <div class="row mb-1">
+          <label for="name" class="col-4 col-form-label">
+            <p>Course Name</p>
+          </label>
+          <div class="col-8">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              required
+              ng-model="course_name"
+            />
+          </div>
+        </div>
+    
+        <div class="d-grid gap-2">
+          <button class="btn btn-success" type="submit"> <i class="fas fa-save"></i>  Course</button>
+        </div>
+    </form>
+</div>

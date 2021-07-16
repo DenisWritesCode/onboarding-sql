@@ -1,5 +1,5 @@
 const express = require("express");
-const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // Import routes
 const institutionRoutes = require("./routes/institutionRoutes");
@@ -17,6 +17,10 @@ app.use(express.static("public"));
 // Needed for accessing data from the URL
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
+app.set('view engine', 'ejs');
+app.use(cors({
+  origin: '*'
+}));
 
 // Routes
 app.get('/', (req, res) => {
