@@ -1,21 +1,50 @@
 <div class="student">
+  <a
+    ui-sref="courseDetails({id: newStudentDetails.course_id, school_id: newStudentDetails.institution_id})"
+  >
+    <button class="btn btn-outline-success">
+      <i class="fas fa-angle-double-left"></i> Students
+    </button>
+  </a>
   <form ng-submit="updateCourse()">
-    <label>
-      <p>Name:</p>
-      <input
-        type="text"
-        ng-model="newStudentDetails.student"
-        disabled
-      />
-    </label>
+    <h3 style="text-align: left">Edit the Student Name</h3>
 
-    <label>
-      <p>Course:</p>
-      <input
-        type="text"
-        ng-model="newStudentDetails.subject_name"
-      />
-    </label>
-    <button type="submit">Save Changes</button>
+    <div class="row mb-1">
+      <label for="name" class="col-4 col-form-label">
+        <p>Name</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          disabled
+          ng-model="newStudentDetails.subject_name"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <label for="course" class="col-4 col-form-label">
+        <p>Course</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="course"
+          name="course"
+          class="form-control"
+          required
+          ng-model="newStudentDetails.subject_name"
+        />
+      </div>
+    </div>
+
+    <div class="d-grid gap-2">
+      <button class="btn btn-success" type="submit">
+        <i class="fas fa-save"></i> Student
+      </button>
+    </div>
   </form>
 </div>

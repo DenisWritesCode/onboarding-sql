@@ -1,31 +1,60 @@
 <div class="listStudents">
-  <label
-    >Search:
-    <input type="text" ng-model="studentSearch" />
-  </label>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Index</th>
-        <th ng-click="sort('student_name')">
-          <span
-            class="glyphicon sort-icon"
-            ng-show="sortKey=='student_name'"
-            ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"
-          ></span
-          >Student Name
-        </th>
-        <th>Course</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        ng-repeat="student in students |orderBy: sortKey:reverse| filter: studentSearch"
+  <div class="row">
+    <a ui-sref="institution" class="addInstitution">
+      <button class="btn btn-outline-success">
+        <i class="fas fa-angle-double-left"></i> Institution
+      </button>
+    </a>
+  </div>
+  <p ng-hide="students.length > 0" class="no-display">
+    There are no Students to show
+  </p>
+
+  <div class="tableStudents" ng-show="students.length > 0">
+    <h3 class="heading">List of Students</h3>
+    <div class="d-flex justify-content-end">
+      <label class="search"
+        >Search:
+        <input type="text" ng-model="studentSearch" />
+      </label>
+    </div>
+
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-8">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="d-flex">
+              <th class="col-2">Index</th>
+              <th class="sortable col-3" ng-click="sort('student_name')">
+                Student Name
+                <i class="fas fa-chevron-down sort-icon" ng-show="reverse"></i>
+                <i class="fas fa-chevron-up sort-icon" ng-show="!reverse"></i>
+              </th>
+              <th class="col-3">Course</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+            class="d-flex"
+              dir-paginate="student in students |orderBy: sortKey:reverse| filter: {student_name: studentSearch}|itemsPerPage:2 as studentsFound"
+            >
+              <td class="col-2">{{$index + 1}}</td>
+              <td class="col-3">{{student.student_name}}</td>
+              <td class="col-3">{{student.course_name}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <span ng-if="studentsFound.length == 0">No students match the search criteria</span>
+      </div>
+      <div class="col-1"></div>
+      <dir-pagination-controls
+      ng-hide = "studentSearch.length > 0"
+        max-size="5"
+        direction-links="true"
+        boundary-links="true"
       >
-        <td>{{$index + 1}}</td>
-        <td>{{student.student_name}}</td>
-        <td>{{student.course_name}}</td>
-      </tr>
-    </tbody>
-  </table>
+      </dir-pagination-controls>
+    </div>
+  </div>
 </div>

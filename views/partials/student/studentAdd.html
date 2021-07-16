@@ -1,25 +1,53 @@
 <div class="addStudent">
+
+  <a
+    ui-sref="courseDetails({id: student.course_id, school_id: student.institution_id})"
+  >
+    <button class="btn btn-outline-success">
+      <i class="fas fa-angle-double-left"></i> Students
+    </button>
+  </a>
   <form ng-submit="addStudentFunction()">
-    <label for="name">
-      <p>Student Name:</p>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        required
-        ng-model="student.student_name"
-      />
-    </label>
-    <label for="student_course">
-      <p>Course:</p>
-      <input
-        type="text"
-        name="student_course"
-        id="student_course"
-        ng-model="student.course_name"
-        disabled 
-      /> <!-- Disabled because you don't need to change the course. Just here for visual feedback -->
-    </label>
-    <button type="submit">Add Student</button>
+    <h3 style="text-align: left">Add a student</h3>
+
+    <div class="row mb-1">
+      <label for="name" class="col-4 col-form-label">
+        <p>Student Name</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          ng-model="student.student_name"
+        />
+      </div>
+    </div>
+
+
+    <div class="row mb-1">
+      <label for="course" class="col-4 col-form-label">
+        <p>Course Name</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="course"
+          name="course"
+          class="form-control"
+          required
+          ng-model="student.course_name"
+          disabled
+        />
+      </div>
+    </div>
+  
+    <div class="d-grid gap-2">
+      <button class="btn btn-success" type="submit">
+        <i class="fas fa-save"></i> Student
+      </button>
+    </div>
   </form>
 </div>

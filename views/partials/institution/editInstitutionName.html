@@ -1,9 +1,30 @@
 <div class="editInstitutionName">
-    <form ng-submit="updateInstitutionName()">
-        <label >
-            <p>Institution name:</p>
-            <input type="text" ng-model="institution_name">
-        </label>
-        <button type="submit">Update institution</button>
-    </form>
+  <a ui-sref="institution">
+    <button class="btn btn-outline-success">
+      <i class="fas fa-angle-double-left"></i> Institutions
+    </button>
+  </a>
+  <form ng-submit="updateInstitutionName()">
+    <h3>Edit the Institution Name</h3>
+
+    <div class="row mb-1">
+      <label for="name" class="col-4 col-form-label">
+        <p>Institution Name</p>
+      </label>
+      <div class="col-8">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          ng-model="institution_name"
+        />
+      </div>
+    </div>
+
+    <div class="d-grid gap-2">
+      <button class="btn btn-success" type="submit"> <i class="fas fa-save"></i> Institution</button>
+    </div>
+  </form>
 </div>

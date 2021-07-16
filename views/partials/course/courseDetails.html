@@ -1,25 +1,80 @@
 <div class="">
-  <a ui-sref="addStudent({course: students[0].course_name, id: course_id})"
-    >Add student to this Course</a
-  >
-  <label>Search:
-    <input type="text" ng-model="studentToSearch" />
-  </label>
-  <ul>
-    <li ng-repeat="student in students | filter: {'student_name' : studentToSearch}">
-      {{student.student_name}} -
-      <a ui-sref="studentEditName({course: course_id, id: student.student_id})"
-        >Edit {{student.student_name}}'s Name</a
-      >
-      <a
-        ui-sref="studentEditCourse({course: course_id, id: student.student_id})"
-        >Edit {{student.student_name}}'s Course</a
-      >
-      <a
-        ui-sref="studentEditCourseInstitution({course: course_id, id: student.student_id})"
-        >Edit {{student.student_name}}'s Course & Institution</a
-      >
-      <button ng-click="delete(student.student_id)">Delete</button>
-    </li>
-  </ul>
+  <a ui-sref="institutionDetails({id: institution_id})">
+    <button class="btn btn-outline-success">
+      <i class="fas fa-angle-double-left"></i> Course
+    </button>
+  </a>
+
+  <div class="row my-2">
+    <a
+      ui-sref="addStudent({course: students[0].course_name, id: course_id, institution_id: institution_id})"
+      class="addStudent"
+    >
+      <button class="btn btn-outline-success">
+        <i class="fas fa-plus-circle"></i> Student
+      </button>
+    </a>
+  </div>
+  <p ng-hide="students.length > 0" class="no-display">
+    There are no students to show
+  </p>
+
+  <div class="tableStudents" ng-show="students.length > 0">
+    <h3 class="heading">List of Students</h3>
+    <div class="d-flex justify-content-end">
+      <label class="search"
+        >Search
+        <input type="text" ng-model="studentToSearch" />
+      </label>
+    </div>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="d-flex">
+              <th class="col-2">Index</th>
+              <th class="sortable col-3" ng-click="sort('student_name')">
+                Student Name
+                <i class="fas fa-chevron-down sort-icon" ng-show="reverse"></i>
+                <i class="fas fa-chevron-up sort-icon" ng-show="!reverse"></i>
+              </th>
+              <th class="col-6">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="d-flex"
+              ng-repeat="student in students | orderBy: sortKey:reverse | filter: {'student_name' : studentToSearch}"
+            >
+              <td class="col-2">{{$index + 1}}</td>
+              <td class="col-3">{{student.student_name}}</td>
+              <td class="col-6">
+                <a
+                  ui-sref="studentEditName({course: course_id, id: student.student_id, institution_id: institution_id})"
+                  ><i class="fas fa-edit"></i> Name</a
+                >
+                <a
+                  ui-sref="studentEditCourse({course: course_id, id: student.student_id,  institution_id: institution_id})"
+                  >| <i class="fas fa-edit"></i> Course |</a
+                >
+                <a
+                
+                  ui-sref="studentEditCourseInstitution({course: course_id, id: student.student_id,  institution_id: institution_id})"
+                  ><i class="fas fa-edit"></i> Course & Institution |</a
+                >
+                <button
+                  class="btn text-danger"
+                  ng-click="delete(student.student_id)"
+                >
+                  <i class="fas fa-times-circle"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-1"></div>
+    </div>
+  </div>
 </div>

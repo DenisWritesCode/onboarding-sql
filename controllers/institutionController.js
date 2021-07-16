@@ -94,7 +94,7 @@ const delete_institution = (req, res) => {
     if (err) throw err;
     if (results.length > 0) {
       // That institution has courses
-      res.send("Can't delete an institution that has a course attached to it");
+      res.status(500).send("Can't delete an institution that has a course attached to it");
     } else {
       // That institution has no courses thus can be deleted.
       const sql_delete = "DELETE FROM `institution` WHERE institution_id=?";
