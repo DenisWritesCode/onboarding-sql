@@ -69,3 +69,15 @@ form {
     max-width: 50%;
     margin: 10px auto;
 }
+
+.no-display {
+  margin: 25px 0;
+}
+
+.pagination-links a{
+  margin-left: 7px;
+}
+
+.pagination-links a:hover{
+  color: #1b7700;
+}

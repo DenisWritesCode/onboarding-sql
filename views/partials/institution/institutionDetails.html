@@ -1,22 +1,22 @@
 <div class="">
-  <a ui-sref="institution">
-    <button class="btn btn-outline-success">
-      <i class="fas fa-angle-double-left"></i> Institutions
-    </button>
-  </a>
-
-  <div class="row my-2">
-    <a
+  <div class="d-flex justify-content-between">
+    <p><a ui-sref="institution">
+      <button class="btn btn-outline-success">
+        <i class="fas fa-angle-double-left"></i> Institutions
+      </button>
+    </a></p>
+    <p><a
       ui-sref="addCourse({institution: courses[0].institution_name, id: courses[0].institution_id})"
       class="addInstitution"
     >
       <button class="btn btn-outline-success">
         <i class="fas fa-plus-circle"></i> Course
       </button>
-    </a>
+    </a></p>
   </div>
+
   <p ng-hide="courses.length > 0" class="no-display">
-    There are no institutions to show
+    There are no courses attached to this institution
   </p>
   <div class="tableCourses" ng-show="courses.length > 0">
     <h3 class="heading">List of Courses</h3>
@@ -27,7 +27,9 @@
       </label>
     </div>
 
-    <div class="row">
+    <div ng-show="!(courses | filter:courseToSearch).length">No courses match that search criteria</div>
+
+    <div class="row" ng-show="(courses | filter:courseToSearch).length > 0">
       <div class="col-1"></div>
       <div class="col-10">
         <table class="table table-striped table-hover">
@@ -54,7 +56,8 @@
                   ui-sref="courseDetails({id: course.course_id, school_id: course.institution_id})"
                   >View</a
                 >
-                <a class="mx-3"
+                <a
+                  class=""
                   ui-sref="courseEditName({course: course.course_name, id: course.institution_id, course_id: course.course_id})"
                   >| <i class="fas fa-edit"></i> Name |</a
                 >

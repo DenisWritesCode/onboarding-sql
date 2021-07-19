@@ -24,35 +24,36 @@
         />
       </div>
     </div>
-    <div class="row mb-1">
-      <label for="course" class="col-4 col-form-label">
-        <p>Course</p>
-      </label>
-      <div class="col-8">
-        <input
-          type="text"
-          id="course"
-          name="course"
-          class="form-control"
-          required
-          ng-model="newStudentDetails.course_name"
-        />
-      </div>
-    </div>
 
     <div class="row mb-1">
       <label for="institution" class="col-4 col-form-label">
         <p>Institution</p>
       </label>
       <div class="col-8">
-        <input
-          type="text"
+        <select
           id="institution"
           name="institution"
-          class="form-control"
+          class="form-select"
           required
-          ng-model="newStudentDetails.institution_name"
-        />
+          ng-options="school.institution_name for school in schools"
+          ng-model="school_student"
+        ></select>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <label for="course" class="col-4 col-form-label">
+        <p>Course</p>
+      </label>
+      <div class="col-8">
+        <select
+          id="course"
+          name="course"
+          class="form-select"
+          required
+          ng-options="course.course_name for course in coursesFiltered"
+          ng-model="subject_course"
+        ></select>
       </div>
     </div>
 

@@ -8,9 +8,12 @@
     </a>
   </div>
 
-  <p ng-hide="schools.length > 0" class="no-display">
-    There are no institutions to show
-  </p>
+  <div ng-hide="schools.length > 0" class="no-display">
+    <hr>
+    <p>
+      There are no institutions to show
+    </p> 
+  </div>
   <div class="tableInstitution" ng-show="schools.length > 0">
     <h3 class="heading">List of Institutions</h3>
     <div class="d-flex justify-content-end">
@@ -20,7 +23,9 @@
       </label>
     </div>
 
-    <div class="row">
+    <div ng-show="!(schools | filter:institutionSearch).length">No schools match that search criteria</div>
+
+    <div class="row" ng-show="(schools | filter:institutionSearch).length">
       <div class="col-1"></div>
       <div class="col-10">
         <table class="table table-hover table-striped">

@@ -7,7 +7,7 @@
     </button>
   </a>
   <form ng-submit="updateCourse()">
-    <h3 style="text-align: left">Edit the Student Name</h3>
+    <h3 style="text-align: left">Edit the Student Course</h3>
 
     <div class="row mb-1">
       <label for="name" class="col-4 col-form-label">
@@ -20,7 +20,7 @@
           name="name"
           class="form-control"
           disabled
-          ng-model="newStudentDetails.subject_name"
+          ng-model="newStudentDetails.student"
         />
       </div>
     </div>
@@ -30,14 +30,15 @@
         <p>Course</p>
       </label>
       <div class="col-8">
-        <input
-          type="text"
+        <select
           id="course"
           name="course"
-          class="form-control"
+          class="form-select"
+          ng-model="subject_course"
+          ng-options="course.course_name for course in courses"
           required
-          ng-model="newStudentDetails.subject_name"
-        />
+        >
+        </select>
       </div>
     </div>
 

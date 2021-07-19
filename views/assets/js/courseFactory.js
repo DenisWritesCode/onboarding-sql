@@ -12,6 +12,14 @@ app.factory("courseFactory", function ($http, $window) {
 
       return req;
     },
+    getCoursesFromInstitution: function (id) {
+      const url = `${baseUrl}/institution/${id}`;
+      const req = $http
+        .get(url)
+        .then((res) => res.data)
+        .catch((err) => console.log(err));
+      return req;
+    },
     getCourseStudents: function (id) {
       const url = `${baseUrl}/${id}`;
       const req = $http
@@ -33,17 +41,30 @@ app.factory("courseFactory", function ($http, $window) {
         .post(baseUrl, data)
         .then((res) => {
           if (res.status === 200) {
-            alert("Course added successfully");
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "New course has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             const url = `#!/institution/${courseDetails.institution_id}`;
             $window.location.href = url;
           }
         })
-        .catch((err) => alert(err.data));
+        .catch((err) => {
+          Swal.fire({
+            icon: "info",
+            title: "Error!",
+            text: err.data,
+            showConfirmButton: true,
+          });
+        });
     },
     updateCourseName: function (courseDetails) {
       const url = `${baseUrl}/${courseDetails.course_id}`;
       const data = {
-          institution_id: courseDetails.id,
+        institution_id: courseDetails.id,
         name: courseDetails.name,
       };
 
@@ -51,23 +72,64 @@ app.factory("courseFactory", function ($http, $window) {
         .put(url, data)
         .then((res) => {
           if (res.status === 200) {
-            alert("successfully updated");
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "New course name has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             const url = `#!/institution/${courseDetails.id}`;
             $window.location.href = url;
           }
         })
-        .catch((err) => alert(err.data));
+        .catch((err) => {
+          Swal.fire({
+            icon: "info",
+            title: "Error!",
+            text: err.data,
+            showConfirmButton: true,
+          });
+        });
     },
     deleteCourse: function (id) {
       const url = `${baseUrl}/${id}`;
 
-      $http
-        .delete(url)
-        .then((res) => {
-          alert("Course deleted successfully");
-          $window.location.reload(true);
-        })
-        .catch((err) => alert(err.data));
+      Swal.fire({
+        title: "Delete?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#085f00",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $http
+            .delete(url)
+            .then((res) => {
+              swal
+                .fire({
+                  title: "Success!",
+                  text: "Course successfully deleted",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                .then((result) => {
+                  $window.location.reload(true);
+                });
+            })
+            .catch((err) => {
+              swal.fire({
+                title: "Error!",
+                text: err.data,
+                icon: "error",
+                button: "OK !",
+              });
+            });
+        }
+      });
     },
   };
 
