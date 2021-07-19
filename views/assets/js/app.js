@@ -230,8 +230,14 @@ app.config([
           student: function (studentFactory, $stateParams) {
             return studentFactory.getStudentDetails($stateParams.id);
           },
+          courses: function(courseFactory, $stateParams) {
+            return courseFactory.getCoursesFromInstitution($stateParams.institution_id);
+          }
         },
-        controller: function ($scope, student, studentFactory, $stateParams) {
+        controller: function ($scope, student, courses, studentFactory, $stateParams) {
+
+          $scope.courses = courses;
+          $scope.subject_course = student[0].course_name.course_name;
           $scope.newStudentDetails = {
             course_id: $stateParams.course,
             institution_id: $stateParams.institution_id,
@@ -240,7 +246,9 @@ app.config([
             subject_name: student[0].course_name,
           };
 
+
           $scope.updateCourse = function () {
+            $scope.newStudentDetails.subject_name = $scope.subject_course.course_name;
             studentFactory.editCourseOnly($scope.newStudentDetails);
           };
         },
@@ -253,8 +261,22 @@ app.config([
           student: function (studentFactory, $stateParams) {
             return studentFactory.getStudentDetails($stateParams.id);
           },
+          courses: function(courseFactory) {
+            return courseFactory.getAllCourses();
+          },
+          schools: function (institutionFactory) {
+            return institutionFactory.getAllInstitutions();
+          },
         },
-        controller: function ($scope, student, $stateParams, studentFactory) {
+        controller: function ($scope, student, $stateParams, courses, schools, studentFactory) {
+
+          $scope.courses = courses;
+          $scope.schools = schools;
+          $scope.coursesFiltered = [];
+
+          $scope.subject_course = student[0].course_name;
+          $scope.school_student = student[0].institution_name;
+
           $scope.newStudentDetails = {
             student_id: $stateParams.id,
             course_id: $stateParams.course,
@@ -264,7 +286,13 @@ app.config([
             institution_name: student[0].institution_name,
           };
 
+          $scope.$watch('school_student', function(selectedSchool){
+            $scope.coursesFiltered = courses.filter(course => course.institution === selectedSchool.institution_id);
+          });
+
           $scope.editCourseInstitution = function () {
+            $scope.newStudentDetails.course_name = $scope.subject_course.course_name;
+            $scope.newStudentDetails.institution_name = $scope.school_student.institution_name;
             studentFactory.editCourseInstitution($scope.newStudentDetails);
           };
         },

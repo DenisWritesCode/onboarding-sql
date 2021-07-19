@@ -195,8 +195,6 @@ const edit_course_name = (req, res) => {
       res.status(500).send("The intended institution for enrollment doesn't exist.");
     }
   });
-  // Confirm course exists within institution
-  // Add student
 };
 
 module.exports = {

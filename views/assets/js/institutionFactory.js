@@ -23,6 +23,17 @@ app.factory("institutionFactory", function ($http, $window) {
 
       return req;
     },
+    getInstitutionStudents: function (id) {
+      const url = `${baseUrl}/students/${id}`;
+      const req = $http
+        .get(url)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err) => console.log(err));
+
+      return req;
+    },
     addInstitution: function (institutionDetails) {
       const data = {
         name: institutionDetails.institution_name,
@@ -31,22 +42,23 @@ app.factory("institutionFactory", function ($http, $window) {
       const req = $http
         .post(baseUrl, data)
         .then((res) => {
-          alert("Instution added successfully");
+          swal.fire({
+            title: "Success!",
+            text: "Institution added successfully!",
+            icon: "success",
+            button: "Done !",
+          });
           const url = `#!/institution`;
           $window.location.href = url;
         })
-        .catch((err) => alert(err.data));
-
-      return req;
-    },
-    getInstitutionStudents: function (id){
-      const url = `${baseUrl}/students/${id}`;
-      const req = $http
-        .get(url)
-        .then((res) => {
-          return res.data;
-        })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          swal.fire({
+            title: "Error!",
+            text: err.data,
+            icon: "error",
+            button: "OK !",
+          });
+        });
 
       return req;
     },
@@ -60,23 +72,62 @@ app.factory("institutionFactory", function ($http, $window) {
         .put(url, data)
         .then((res) => {
           if (res.status === 200) {
-            alert("successfully updated");
+            swal.fire({
+              title: "Good job!",
+              text: "Institution update successfully!",
+              icon: "success",
+              button: "Done !",
+            });
             const url = `#!/institution`;
             $window.location.href = url;
           }
         })
-        .catch((err) => alert(err.data));
+        .catch((err) => {
+          swal.fire({
+            title: "Error!",
+            text: err.data,
+            icon: "error",
+            button: "OK !",
+          });
+        });
     },
     deleteInstitution: function (id) {
       const url = `${baseUrl}/${id}`;
 
-      $http
-        .delete(url)
-        .then((res) => {
-          alert("Institution deleted successfully");
-          $window.location.reload(true);
-        })
-        .catch((err) => alert(err.data));
+      Swal.fire({
+        title: "Delete?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#085f00",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $http
+            .delete(url)
+            .then((res) => {
+              swal.fire({
+                title: "Success!",
+                text: "Institution successfully deleted",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(result => {
+
+                $window.location.reload(true);
+              })
+            })
+            .catch((err) => {
+              swal.fire({
+                title: "Error!",
+                text: err.data,
+                icon: "error",
+                button: "OK !",
+              });
+            });
+          }
+      });
     },
   };
 

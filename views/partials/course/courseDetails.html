@@ -1,11 +1,12 @@
 <div class="">
+  <div class="d-flex justify-content-between">
   <a ui-sref="institutionDetails({id: institution_id})">
     <button class="btn btn-outline-success">
       <i class="fas fa-angle-double-left"></i> Course
     </button>
   </a>
 
-  <div class="row my-2">
+  
     <a
       ui-sref="addStudent({course: students[0].course_name, id: course_id, institution_id: institution_id})"
       class="addStudent"
@@ -21,13 +22,17 @@
 
   <div class="tableStudents" ng-show="students.length > 0">
     <h3 class="heading">List of Students</h3>
+
     <div class="d-flex justify-content-end">
       <label class="search"
         >Search
         <input type="text" ng-model="studentToSearch" />
       </label>
     </div>
-    <div class="row">
+
+    <p ng-show="!(students | filter:studentToSearch).length">No students match that search criteria</p>
+
+    <div class="row" ng-show="(students | filter:studentToSearch).length">
       <div class="col-1"></div>
       <div class="col-10">
         <table class="table table-striped table-hover">
